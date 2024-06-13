@@ -1,0 +1,92 @@
+/* Estilos generales */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Estilos para el header*/
+.header {
+    background-color: #085394;
+    color: white;
+    padding: 1px 0;
+    max-height: fit-content;
+}
+
+.contHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+img .logo {
+    width: 111px;
+}
+
+.usuario {
+    margin-left: 10px; /* Espacio entre el mensaje de bienvenida y el ícono de usuario */
+}
+
+/*.logo, .usuario, .carrito {
+    width: 100px;  Ajustar el tamaño
+}*/
+
+.carrito{
+    color: #fff;
+    font-size: 25px;
+}
+/* Menú de navegación */
+.navbar nav ul.menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.navbar nav ul.menu li {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.navbar nav ul.menu li a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* Cambia el color al pasar el mouse */
+.navbar nav ul.menu li a:hover {
+    background-color: white;
+    color: #085394; 
+}
+
+.usuario{
+    color: white;
+    font-size: 25px;
+}
+
+.usuario:hover{
+    color: black;
+}
+
+.usuario a{
+    color: white;
+    font-size: 15px;
+    text-decoration: none;
+}
+
+.usuario-container {
+    display: flex;
+    align-items: center;
+    margin-left: auto; /*Contenedor de usuario a la derecha*/
+    }
+
+.usuario-container .usuario {
+    margin-left: 10px; /* Espacio entre el mensaje de bienvenida y el ícono de usuario */
+}
+
+.cerrar{
+    font-size: 25px;
+    color: #C40C0C;
+}

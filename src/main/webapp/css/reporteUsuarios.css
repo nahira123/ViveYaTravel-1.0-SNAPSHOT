@@ -1,0 +1,28 @@
+/* Estilos para la tabla */
+.tablaRep {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Estilos para las celdas de la tabla */
+.tablaRep td, .tablaRep th {
+    border: 1px solid #dddddd;
+    padding: 8px;
+    text-align: left;
+}
+
+/* Estilos para la cabecera de la tabla */
+.tablaRep th {
+    background-color: #f2f2f2;
+}
+
+/* Estilos para las filas impares de la tabla */
+.tablaRep tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+/* Estilos para las filas pares de la tabla */
+.tablaRep tbody tr:nth-child(even) {
+    background-color: #ffffff;
+}
+

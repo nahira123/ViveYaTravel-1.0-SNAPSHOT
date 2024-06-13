@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.21.0.final using JasperReports Library version 6.21.0-4f56c4f36cd19e17675219a9ac4692d5f0f13b06  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Reporte usuarios" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8af52176-3796-4925-84c1-976cdedebe79">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<topPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<leftPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<rightPen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#2A3132">
+		<box>
+			<pen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<topPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<leftPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<rightPen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<topPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<leftPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<rightPen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<subDataset name="dsReporteUsuario" uuid="90b0cb48-9616-467f-90c4-2a9cea09ae01">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="idUsuario" class="java.lang.Integer"/>
+		<field name="nombre" class="java.lang.String"/>
+		<field name="apellido" class="java.lang.String"/>
+		<field name="nroCelular" class="java.lang.Integer"/>
+		<field name="nroDni" class="java.lang.Integer"/>
+		<field name="correoElectronico" class="java.lang.String"/>
+		<field name="clave" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="logo" class="java.io.InputStream"/>
+	<parameter name="ds" class="net.sf.jasperreports.engine.data.JRBeanArrayDataSource"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band height="24" splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="120" splitType="Stretch">
+			<image onErrorType="Blank">
+				<reportElement x="0" y="10" width="80" height="80" uuid="381a5f1c-0f8e-4622-831f-4bd6ebf726fb">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="90" y="10" width="50" height="15" uuid="1228a4f9-d765-41e6-a5b4-d7d5ca87d27c">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Empresa:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="30" width="30" height="15" uuid="280a86f9-0537-4d45-a36e-aac26c356cc9">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[RUC:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="60" width="50" height="15" uuid="fcd0caf2-123c-43de-8164-4fd0e1dbf434">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dirección:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="90" width="100" height="15" uuid="c79c02d7-7650-4b78-b9b5-d20d0ae46573">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Correo Electrónico:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="330" y="90" width="60" height="15" uuid="fb6a1798-df2d-4e3e-9646-a531a72fc018">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Teléfono]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="9" width="70" height="19" uuid="f5f4c3e4-bf33-4092-844d-13dc9ec9e594"/>
+				<textElement textAlignment="Left">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha y hora:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="140" y="11" width="80" height="14" uuid="b4b13b47-4452-440b-9132-929f1a93f316"/>
+				<text><![CDATA[Vive Ya Travel]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="140" y="30" width="80" height="14" uuid="07a11f63-a7b9-43c4-b8c5-9193c589b86d"/>
+				<text><![CDATA[987654321]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="150" y="60" width="120" height="14" uuid="8977471f-f885-4485-bc88-14b8eafc21a7"/>
+				<text><![CDATA[Av. Javier Prado Este 3371]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="90" width="120" height="14" uuid="9ee4a21d-1bd1-40cb-861b-6bdeb23bf0ac"/>
+				<text><![CDATA[viveyatravel@gmail.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="390" y="90" width="120" height="14" uuid="fa2471db-b981-4acb-8341-f8b2d9406514"/>
+				<text><![CDATA[987654321]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="370" y="10" width="90" height="16" uuid="dba01ae8-8121-4789-8b97-75791f1ebbfc"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="110" width="560" height="1" uuid="c5438284-b307-42a5-af28-dad0e6aece2c">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<textField pattern="HH:mm">
+				<reportElement style="Table_TD" x="470" y="10" width="87" height="20" uuid="fecf3521-bc74-41aa-b987-236d64a9bcc6"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="30" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="0" width="559" height="30" forecolor="#FFFFFF" backcolor="#336B87" uuid="4de859ed-124f-43f1-add1-5ea429d970ff"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE USUARIOS - VIVE YA TRAVEL]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="105" splitType="Stretch">
+			<componentElement>
+				<reportElement x="-1" y="20" width="557" height="60" uuid="3c5948bb-038a-42c8-9be6-13ec51ea9b3d">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dsReporteUsuario" uuid="d9bee384-82b9-40a6-b841-470fc717be37">
+						<dataSourceExpression><![CDATA[$P{ds}]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="40" uuid="5a4c2a67-4e04-43a8-9400-e173b44aa11a">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="40" height="30" forecolor="#FFFFFF" uuid="d6070e59-94d6-431f-8af7-f42aefe1f72f"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle" markup="">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[ID]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="40" height="30" uuid="4ec80ea5-18e6-4f78-9768-cc886ef9a326"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{idUsuario}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="100" uuid="81a2a356-4942-4fda-ad7d-e5ebaa787ca6">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="100" height="30" forecolor="#FFFFFF" uuid="dba240b4-0c55-46c0-82f3-2460101b334d"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle" markup="">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[NOMBRE]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="100" height="30" uuid="a9552445-70da-43c6-875e-9db11c2e8b7c"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="b0fded75-8cf9-4236-9ca2-cc81c838d774">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" forecolor="#FFFFFF" uuid="aa5d4c26-2ad5-4e4d-9b35-3af8d8c1939b"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle" markup="">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[APELLIDO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="30" uuid="afee36f7-8a21-4fb3-a8db-e1f7d30f4df9"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{apellido}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="a11ed737-b12d-4c8b-b453-73c537a4a81a">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" forecolor="#FFFFFF" uuid="fafd6966-4d16-4e95-969b-bd5bbdb23f33"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle" markup="">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[TELÉFONO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="30" uuid="b9686df1-5542-4101-bc84-5c5ca28feaa9"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{nroCelular}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="80" uuid="821a5593-b739-48e1-9ace-8ffce3ab0034">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="80" height="30" forecolor="#FFFFFF" uuid="110ca85c-bd9e-49ce-be0e-698d9eef3ce3"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle" markup="">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[DNI]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="80" height="30" uuid="73b9a8e0-9aed-4f1f-9d5f-692d0277d550"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{nroDni}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="80" uuid="4bb93086-409c-44eb-9a33-34237ce33abf">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="80" height="30" forecolor="#FFFFFF" uuid="bb181206-2374-4ffc-a578-aacf147f7b93"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle" markup="">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[CORREO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="80" height="30" uuid="2457199b-9f4a-4322-ba85-70627ddcdd6c"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{correoElectronico}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="80" uuid="8e9eae04-5158-424c-a8a1-85a1ac3e6e52">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column7"/>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="80" height="30" forecolor="#FFFFFF" uuid="54b4cf73-45b1-46e4-9efa-49c8129a5a9b"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle" markup="">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[CONTRASEÑA]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="80" height="30" uuid="a1f43bbc-8769-4b99-9fdb-bbc744c1a219"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{clave}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="36" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="6" width="370" height="30" uuid="3e50ad5c-2199-4844-81c9-4e8fcc55fc74"/>
+				<text><![CDATA[Representación impresa de los usuarios de la agencia de viajes Vive Ya Travel Para más información visite nuestra página web: https://www.viveyatravel.com.pe]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>
