@@ -1,4 +1,4 @@
-<%@page import="modelo.dto.usuario"%>
+<%@page import="com.mycompany.viveyatravel.modelo.dto.usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <header>
