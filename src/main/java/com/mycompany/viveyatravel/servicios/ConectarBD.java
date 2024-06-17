@@ -10,7 +10,7 @@ public class ConectarBD {
     public Connection getConexion() {
         Connection cnx = null;
         
-          String url = "jdbc:mysql://localhost:3309/bdagenciadeviajes?useTimeZone=true&"
+          String url = "jdbc:mysql://localhost:3306/bdagenciadeviajes?useTimeZone=true&"
                 + "serverTimezone=UTC&autoReconnect=true";
 
         String user = "root";
