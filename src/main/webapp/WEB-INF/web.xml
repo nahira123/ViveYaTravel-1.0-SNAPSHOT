@@ -28,6 +28,10 @@
         <servlet-name>reporteUsuarios</servlet-name>
         <servlet-class>com.mycompany.viveyatravel.controladores.reporteUsuarios</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>srvActualizarUsuario</servlet-name>
+        <servlet-class>com.mycompany.viveyatravel.controladores.srvActualizarUsuario</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Controlador</servlet-name>
         <url-pattern>/Controlador</url-pattern>
@@ -55,6 +59,10 @@
     <servlet-mapping>
         <servlet-name>reporteUsuarios</servlet-name>
         <url-pattern>/reporteUsuarios</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>srvActualizarUsuario</servlet-name>
+        <url-pattern>/srvActualizarUsuario</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

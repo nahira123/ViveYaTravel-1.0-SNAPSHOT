@@ -74,7 +74,7 @@
                 <label for="btn-modal"><i class="fa-solid fa-xmark"></i></label>
             </div>
             <h2>Editar Perfil</h2>
-            <form action="${pageContext.request.contextPath}/srvUsuario" method="POST">
+            <form action="${pageContext.request.contextPath}/srvActualizarUsuario" method="POST">
                 <input type="hidden" name="accion" value="actualizar">
                 <input type="hidden" name="idUsuario" value="<%= cliente.getIdUsuario()%>">
                 <div class="update">

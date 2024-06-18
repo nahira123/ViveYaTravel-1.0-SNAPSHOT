@@ -81,6 +81,27 @@ public usuario registrar(usuario user) throws SQLException {
     return usu;
 }
 
+public void actualizar(usuario user) throws SQLException{
+    String sql = "UPDATE usuario SET nombre = ?, apellido = ?, nroCelular = ?, nroDni = ?, correoElectronico = ?, clave = ? WHERE idUsuario = ?";
+    PreparedStatement ps = null;
+    try{
+        ps = cn.prepareStatement(sql);
+        ps.setString(1, user.getNombre());
+        ps.setString(2, user.getApellido());
+        ps.setInt(3, user.getNroCelular());
+        ps.setInt(4, user.getNroDni());
+        ps.setString(5, user.getCorreoElectronico());
+        ps.setString(6, user.getClave());
+        ps.setInt(7, user.getIdUsuario());
+        ps.executeUpdate();
+    } catch (SQLException e){
+        throw new SQLException("Error al actualizar: " + e.getMessage());
+    } finally{
+        if(ps != null && !ps.isClosed()){
+            ps.close();
+        }
+    }
+}
 //----------------------
 public List<usuario> repUsuario() {
     List<usuario> repUsuario = new ArrayList<>();
