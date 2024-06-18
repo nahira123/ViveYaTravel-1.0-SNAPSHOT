@@ -15,16 +15,12 @@
     <jsp:include page="ADMIHeader.jsp"/>
 
     <body>
-
-        <h1>Reporte usuarios</h1>
-
-        <div class="form-group">
-            <form target="_blank" action="../reporteUsuarios" id="formReporte" method="post">
-                <input type="hidden" name="accion" id="accion"><!-- comment -->
-                <button onclick="reporte('exportarReporteUsuarios')" type="button" class="btn btn-sm btn-outline-primary"><i class="fas fa-file-pdf"></i>Exportar PDF</button>
-                <input type="hidden" name="repUsuario" id="repUsuario">
-            </form>
-        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <h1>Reporte usuarios</h1>     
 
 
         <table class="tablaRep">

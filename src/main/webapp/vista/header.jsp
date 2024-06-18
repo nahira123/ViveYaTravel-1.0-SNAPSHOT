@@ -22,7 +22,7 @@
                 </nav>
             </div>
             <div class="carro">
-                <a href="main.jsp"><img class="carrito"/><i class="fa-solid fa-cart-shopping carrito"></i></a>
+                <a href="<%=request.getContextPath()%>/vista/car.jsp"><img class="carrito"/><i class="fa-solid fa-cart-shopping carrito"></i></a>
             </div>
             <div class="usuario-container">
                 <!--Cuando entra un usuario se carga esta seccion -->

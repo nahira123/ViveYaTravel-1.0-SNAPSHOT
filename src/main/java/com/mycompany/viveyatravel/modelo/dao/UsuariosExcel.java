@@ -45,7 +45,7 @@ public class UsuariosExcel {
 
         // Crear estilo para la cabecera
         XSSFCellStyle estiloCabecera = libro.createCellStyle();
-        estiloCabecera.setFillForegroundColor(IndexedColors.LIGHT_BLUE.getIndex());
+        estiloCabecera.setFillForegroundColor(IndexedColors.PALE_BLUE.getIndex());
         estiloCabecera.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         estiloCabecera.setBorderTop(BorderStyle.THIN);
         estiloCabecera.setBorderBottom(BorderStyle.THIN);
@@ -65,14 +65,14 @@ public class UsuariosExcel {
 
         // Estilo para las celdas de datos
         XSSFCellStyle estiloCelda = libro.createCellStyle();
-        estiloCelda.setFillForegroundColor(IndexedColors.PALE_BLUE.getIndex());
+        estiloCelda.setFillForegroundColor(IndexedColors.WHITE1.getIndex());
         estiloCelda.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         estiloCelda.setBorderTop(BorderStyle.THIN);
         estiloCelda.setBorderBottom(BorderStyle.THIN);
         estiloCelda.setBorderLeft(BorderStyle.THIN);
         estiloCelda.setBorderRight(BorderStyle.THIN);
 
-        // Llenar la hoja con los datos de los usuarios
+        // Llenar la hoja con l de los usuarios
         for (int i = 0; i < repUsuario.size(); i++) {
             usuario us = repUsuario.get(i);
             Row fd = hoja.createRow(i + 1); // Se empieza desde la segunda fila
@@ -90,7 +90,7 @@ public class UsuariosExcel {
             }
         }
 
-        //Configuracion de hoja
+        //Estilo para la hoja
         for (int i = 0; i < titulos.length; i++) {
             hoja.autoSizeColumn(i);
         }
