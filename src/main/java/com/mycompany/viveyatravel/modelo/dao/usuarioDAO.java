@@ -23,7 +23,7 @@ public usuario identificar(usuario user) throws SQLException {
     PreparedStatement ps = null;   //Para preparar la consulta
     ResultSet rs = null;  
     //La consulta desde la base de datos
-    String cadSQL = "SELECT u.idUsuario, u.nombre, c.nombreCargo FROM usuario u\n"
+    String cadSQL = "SELECT u.idUsuario, u.nombre, u.apellido, u.nroCelular, u.nroDni, c.nombreCargo FROM usuario u\n"
             + "inner join cargo c on u.idCargo = c.idCargo\n"
             + "where u.correoElectronico = '" + user.getCorreoElectronico() + "' " 
             + "AND u.clave = '" + user.getClave() + "'";     
@@ -34,7 +34,11 @@ public usuario identificar(usuario user) throws SQLException {
             usu = new usuario();
             usu.setIdUsuario(rs.getInt("idUsuario"));
             usu.setNombre(rs.getString("nombre"));
+            usu.setApellido(rs.getString("apellido"));
+            usu.setNroCelular(rs.getInt("nroCelular"));
+            usu.setNroDni(rs.getInt("nroDni"));
             usu.setCorreoElectronico(user.getCorreoElectronico());
+            usu.setClave(user.getClave());
             usu.setCargo(new cargo());
             usu.getCargo().setNombreCargo(rs.getString("nombreCargo"));
 
