@@ -2,8 +2,6 @@
 @import url('https://fonts.google.com/specimen/Dancing+Script?query=dancing');
 
 html {
-    
-    
 }
 
 * {
@@ -25,7 +23,6 @@ body {
     --celeste-medio: #81d4fa; /* Celeste medio */
     --celeste-oscuro: #0288d1; /* Celeste oscuro */
 }
-
 h1{
     display: inline-block;
     position: relative;
