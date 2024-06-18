@@ -65,6 +65,7 @@
             </div>
         </div>
     </div>
+            <%if (cliente != null) {%>
     <input type="checkbox" id="btn-modal">
     <div class="container-modal">
         <div class="content-modal">
@@ -104,5 +105,6 @@
             </form>
         </div>
         <label for="btn-modal" class="cerrar-modal"></label>
+        <%}%>
     </div>
 </header>
