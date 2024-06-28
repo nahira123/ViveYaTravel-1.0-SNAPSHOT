@@ -22,40 +22,97 @@ public class srvADMIPaquete extends HttpServlet {
         
          //crear el objeto paqDAO dentro de PaqueteDAO
         PaqueteDAO paqdao = new PaqueteDAO();
-        List<Paquete> lista = new ArrayList<>();
+        List<Paquete> paquetes = new ArrayList<>();
 
         String accion = request.getParameter("accion");
-        lista = paqdao.listar();
+        paquetes = paqdao.lista();
         if (accion != null) {
-            if (accion.equals("Registrar")) {
-                //Recibir parámetros del formulario
-                String nombrePaquete = request.getParameter("nombrePaquete");
-                String descripcionPaquete = request.getParameter("descripcionPaquete");
-                String precioPaquete = request.getParameter("precioPaquete");
-                String imagen = request.getParameter("imagen");
-                String categoria = request.getParameter("categoria");
-                String detallePaquete = request.getParameter("detallePaquete");
+            switch (accion) {
+                case "Registrar": {
+                    //Recibir parámetros del formulario
+                    String idPaquete = request.getParameter("idPaquete");
+                    String nombrePaquete = request.getParameter("nombrePaquete");
+                    String descripcionPaquete = request.getParameter("descripcionPaquete");
+                    String precioPaquete = request.getParameter("precioPaquete");
+                    String imagen = request.getParameter("imagen");
+                    String categoria = request.getParameter("categoria");
+                    String detallePaquete = request.getParameter("detallePaquete");
 
-                //request.setAttribute("lista", lista);
-                //crear el objeto Paquete y establecer sus atributos
-                Paquete p = new Paquete();
-                p.setNombrePaquete(nombrePaquete);
-                p.setDescripcionPaquete(descripcionPaquete);
-                p.setPrecioPaquete(Integer.parseInt(precioPaquete));
-                p.setImagen(imagen);
-                p.setCategoria(categoria);
-                p.setDetallePaquete(detallePaquete);
+                    
+                    // Validar y convertir idPaquete a entero
+                int id = 0; // Valor por defecto o manejo de error
+                if (!idPaquete.isEmpty()) {
+                    id = Integer.parseInt(idPaquete);
+                }
 
-                //Insertar la sugerencia en la BD por el modelo DAO
-                String resp = new PaqueteDAO().insert(p);
-                
-                request.setAttribute("lista", lista);
-                request.getRequestDispatcher("./vista/ADMITours.jsp").forward(request, response);
+                // Validar y convertir precioPaquete a double
+                double precio = 0.0; // Valor por defecto o manejo de error
+                if (!precioPaquete.isEmpty()) {
+                    precio = Double.parseDouble(precioPaquete);
+                }
+
+                    //crear el objeto Paquete y establecer sus atributos
+                    Paquete p = new Paquete();                    
+                    //request.setAttribute("paquetes", paquetes);}
+                    p.setIdPaquete(id);
+                    p.setNombrePaquete(nombrePaquete);
+                    p.setDescripcionPaquete(descripcionPaquete);
+                    p.setPrecioPaquete(precio);
+                    p.setImagen(imagen);
+                    p.setCategoria(categoria);
+                    p.setDetallePaquete(detallePaquete);
+
+                    //Insertar la sugerencia en la BD por el modelo DAO
+                    String resp = paqdao.insertUpdate(p);
+
+                    // Obtener la lista actualizada de paquetes
+                    paquetes = paqdao.lista();
+                    request.setAttribute("paquetes", paquetes);
+                    request.getRequestDispatcher("./vista/ADMITours.jsp").forward(request, response);
+                    break;
+                }
+
+                case "edit": {
+                    Integer idp = Integer.valueOf(request.getParameter("id"));
+                    Paquete p = paqdao.get(idp);
+                    // Establecer atributos en el request para pasar al JSP de edición
+                    request.setAttribute("idPaquete", "" + p.getIdPaquete());
+                    request.setAttribute("nombrePaquete", "" + p.getNombrePaquete());
+                    request.setAttribute("descripcionPaquete", "" + p.getDescripcionPaquete());
+                    request.setAttribute("precioPaquete", "" + p.getPrecioPaquete());
+                    request.setAttribute("imagen", "" + p.getImagen());
+                    request.setAttribute("categoria", "" + p.getCategoria());
+                    request.setAttribute("detallePaquete", "" + p.getDetallePaquete());
+                    request.setAttribute("paquetes", paquetes);
+
+                    // Obtener la lista actualizada de paquetes
+                    paquetes = paqdao.lista();
+                    request.setAttribute("paquetes", paquetes);
+                    request.getRequestDispatcher("./vista/ADMITours.jsp").forward(request, response);
+                    break;
+                }
+                case "delete": {
+                    Integer idp = Integer.valueOf(request.getParameter("id"));
+                    String resp = paqdao.delete(idp);
+                    // Manejar el resultado del borrado
+                    request.setAttribute("mensaje", resp);
+                    if (resp.trim().isEmpty()) {
+                        request.setAttribute("result", "info");
+                    } else {
+                        request.setAttribute("result", "error");
+                    }           // Actualizar la lista y redirigir a la página de administración
+                    paquetes = paqdao.lista();
+                    request.setAttribute("paquetes", paquetes);
+                    request.getRequestDispatcher("./vista/ADMITours.jsp").forward(request, response);
+                    break;
+                }
+                default:
+                    break;
             }
  
         } else {
-            //En caso no haya ninguna acción se ejecutan estos comandos
-            request.setAttribute("lista", lista);
+             //En caso no haya ninguna acción se ejecutan estos comandos
+            request.setAttribute("paquetes", paquetes);
             request.getRequestDispatcher("./vista/ADMITours.jsp").forward(request, response);
         }
     }

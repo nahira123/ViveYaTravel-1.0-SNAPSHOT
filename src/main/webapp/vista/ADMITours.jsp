@@ -6,10 +6,13 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Tours</title>
         <%--Referenciar los estilos CSS --%>
+         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
         <link href="${pageContext.request.contextPath}/css/header.css" rel="stylesheet" type="text/css"/>
         <link href="${pageContext.request.contextPath}/css/footer.css" rel="stylesheet" type="text/css"/>
         <link href="${pageContext.request.contextPath}/css/tours.css" rel="stylesheet" type="text/css"/>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     </head>
 
     <%-- Traer header --%>
@@ -20,6 +23,8 @@
 
         <form action="<%= request.getContextPath()%>/srvADMIPaquete" method="post" class="formulario" id="formPaquetes">
             <fieldset>
+                <label>ID</label>
+                <input type="text" name="idPaquete" value="${idPaquete}" readonly/>
                 <label>Imagen</label>
                 <input type="text" name="imagen" value="${imagen}"/>
                 <label>Nombre</label>
@@ -29,7 +34,11 @@
                 <label>Precio</label>
                 <input type="text" name="precioPaquete" value="${precioPaquete}"/>
                 <label>Categoría</label>
-                <input type="text" name="categoria" value="${categoria}"/>
+                <select name="categoria">
+                    <option value="T" name="categoria">Tours</option>
+                    <option value="P" name="categoria">Promoción</option>
+                </select>
+                <!-- comment <input type="text" name="categoria" value=""/> -->
                 <label>Detalle</label>
                 <input type="text" name="detallePaquete" value="${detallePaquete}"/>
 
@@ -37,26 +46,28 @@
             </fieldset>
         </form>
 
-        <div class="contenedor">
 
+        <div class="contenedor">
             <div class="contenedor-paquetes">
                 <!--Paquetes-->               
-                <c:forEach var="p" items="${lista}"> <!--Bucle para recorrer la lista-->
 
+                <c:forEach var="tur" items="${paquetes}"> <!--Bucle para recorrer la lista-->
+                    
                     <div class="tour">  <!-- Contenedor -->
-                        <img src="${pageContext.request.contextPath}/paquetes/${p.getImagen()}" alt="lugares"/>
+                       
+                        <img src="${pageContext.request.contextPath}/paquetes/${tur.getImagen()}" alt="lugares"/>
                         <div class="info">
                             <!-- Para obtener los datos -->
-                            <h2>${p.getNombrePaquete()}</h2> 
-                            <p>${p.getDescripcionPaquete()}</p>
+                            <h2>${tur.getNombrePaquete()}</h2> 
+                            <p>${tur.getDescripcionPaquete()}</p>
                             <div class="precio">
-                                <p>S/.${p.getPrecioPaquete()}</p>
+                                <p>S/.${tur.getPrecioPaquete()}</p>
                             </div>
                         </div>
                         <!-- Boton modal -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                data-Titulo="${p.getNombrePaquete()}"
-                                data-Detalle="${p.getDetallePaquete()}">
+                                data-Titulo="${tur.getNombrePaquete()}"
+                                data-Detalle="${tur.getDetallePaquete()}">
                             Ver Detalle
                         </button>
                         <!--Modal--> 
@@ -66,7 +77,7 @@
                                     <div class="modal-header">
                                         <h1 class="modal-title fs-5" id="exampleModalLabel">
                                             <span id="tourTitulo">
-                                                ${p.getNombrePaquete()}
+                                                ${tur.getNombrePaquete()}
                                             </span>
                                         </h1>
                                     </div>
@@ -97,7 +108,7 @@
                                         </div>
 
                                         <span id="tourDetalle">
-                                            ${p.getDetallePaquete()}
+                                            ${tur.getDetallePaquete()}
                                         </span>>
                                     </div>
                                     <div class="modal-footer">
@@ -106,7 +117,9 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>                        
+                        </div> 
+                            <a href="<%=request.getContextPath()%>/srvADMIPaquete?accion=edit&id=${tur.getIdPaquete()}"><i class="fa-solid fa-pen-to-square editar"></i></a>
+                            <a href="<%=request.getContextPath()%>/srvADMIPaquete?accion=delete&id=${tur.getIdPaquete()}"><i class="fa-sharp fa-solid fa-trash delete"></i></a>
                     </div> 
                 </c:forEach>
             </div>

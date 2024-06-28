@@ -13,16 +13,14 @@
         <nav>
             <ul class="menu">
                 <!--Para encontrar la ruta request.getContextPath()%> -->
-                <li><a href="<%=request.getContextPath()%>/srvADMIPaquete">TOURS</a></li>
-                <li><a href="<%=request.getContextPath()%>/srvPromocion">PROMOCIONES</a></li>
-                <li><a href="<%=request.getContextPath()%>/reporteUsuarios">Usuarios</a></li>
+                <li><a href="<%=request.getContextPath()%>/srvADMIPaquete">PAQUETES</a></li>
+                <li><a href="<%=request.getContextPath()%>/reporteUsuarios">USUARIOS</a></li>
+                <li><a href="<%=request.getContextPath()%>/reporteUsuarios">VENTAS</a></li>
                 <li><a href="${pageContext.request.contextPath}/vista/nosotros.jsp">NOSOTROS</a></li>
             </ul>
         </nav>
     </div>
-    <div class="carro">
-        <a href="#"><img class="carrito"/><i class="fa-solid fa-cart-shopping carrito"></i></a>
-    </div>
+
     <div class="usuario-container">
         <p class="bienvenido">
             <% 

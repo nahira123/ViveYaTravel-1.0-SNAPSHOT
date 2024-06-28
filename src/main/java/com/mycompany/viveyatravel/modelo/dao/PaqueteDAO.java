@@ -20,17 +20,18 @@ public class PaqueteDAO {
         cnx = new ConectarBD().getConexion();
     }
 
-    //Para poner dentro de una lista los paquetes registrados
-    public List listar() {
-        List<Paquete> lista = new ArrayList<>();
-        //Consulta SQL para mostrar
-        String SQL = "SELECT idPaquete, nombrePaquete, descripcionPaquete, precioPaquete, imagen, categoria, detallePaquete FROM paquete WHERE categoria='T'";
+    public Paquete get(int idp) {
+        Paquete p = null;
+        //Paquete p = new Paquete();
+        String cadSQL = "SELECT idPaquete, nombrePaquete, descripcionPaquete, precioPaquete, imagen, categoria, detallePaquete FROM paquete WHERE idPaquete=? ";
+
         try {
-            cnx = cn.getConexion();
-            ps = cnx.prepareStatement(SQL);
+            ps = cnx.prepareStatement(cadSQL);
+            ps.setInt(1, idp);
             rs = ps.executeQuery();
-            while (rs.next()) {
-                Paquete p = new Paquete();
+
+            if (rs.next()) {
+                p = new Paquete();
                 p.setIdPaquete(rs.getInt("idPaquete"));
                 p.setNombrePaquete(rs.getString("nombrePaquete"));
                 p.setDescripcionPaquete(rs.getString("descripcionPaquete"));
@@ -38,7 +39,32 @@ public class PaqueteDAO {
                 p.setImagen(rs.getString("imagen"));
                 p.setCategoria(rs.getString("categoria"));
                 p.setDetallePaquete(rs.getString("detallePaquete"));
-                lista.add(p);
+            }
+            rs.close();
+        } catch (SQLException e) {
+        }
+        return p;
+    }
+
+    //Para poner dentro de una lista los tours registrados
+    public List listar() {
+        List<Paquete> lista = new ArrayList<>();
+        //Consulta SQL para mostrar
+        String cadSQL = "SELECT idPaquete, nombrePaquete, descripcionPaquete, precioPaquete, imagen, categoria, detallePaquete FROM paquete WHERE categoria='T'";
+        try {
+            cnx = cn.getConexion();
+            ps = cnx.prepareStatement(cadSQL);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Paquete tur = new Paquete();
+                tur.setIdPaquete(rs.getInt("idPaquete"));
+                tur.setNombrePaquete(rs.getString("nombrePaquete"));
+                tur.setDescripcionPaquete(rs.getString("descripcionPaquete"));
+                tur.setPrecioPaquete(rs.getDouble("precioPaquete"));
+                tur.setImagen(rs.getString("imagen"));
+                tur.setCategoria(rs.getString("categoria"));
+                tur.setDetallePaquete(rs.getString("detallePaquete"));
+                lista.add(tur);
             }
         } catch (SQLException e) {
         }
@@ -49,10 +75,35 @@ public class PaqueteDAO {
     public List list() {
         List<Paquete> promociones = new ArrayList<>();
         //Consulta SQL para mostrar
-        String SQL = "SELECT idPaquete, nombrePaquete, descripcionPaquete, precioPaquete, imagen, categoria, detallePaquete FROM paquete WHERE categoria='P'";
+        String cadSQL = "SELECT idPaquete, nombrePaquete, descripcionPaquete, precioPaquete, imagen, categoria, detallePaquete FROM paquete WHERE categoria='P'";
         try {
             cnx = cn.getConexion();
-            ps = cnx.prepareStatement(SQL);
+            ps = cnx.prepareStatement(cadSQL);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Paquete prom = new Paquete();
+                prom.setIdPaquete(rs.getInt("idPaquete"));
+                prom.setNombrePaquete(rs.getString("nombrePaquete"));
+                prom.setDescripcionPaquete(rs.getString("descripcionPaquete"));
+                prom.setPrecioPaquete(rs.getDouble("precioPaquete"));
+                prom.setImagen(rs.getString("imagen"));
+                prom.setCategoria(rs.getString("categoria"));
+                prom.setDetallePaquete(rs.getString("detallePaquete"));
+                promociones.add(prom);
+            }
+        } catch (SQLException e) {
+        }
+        return promociones;
+    }
+
+    //Lista de todo los paquetes
+    public List lista() {
+        List<Paquete> paquetes = new ArrayList<>();
+        //Consulta SQL para mostrar
+        String cadSQL = "SELECT idPaquete, nombrePaquete, descripcionPaquete, precioPaquete, imagen, categoria, detallePaquete FROM paquete";
+        try {
+            cnx = cn.getConexion();
+            ps = cnx.prepareStatement(cadSQL);
             rs = ps.executeQuery();
             while (rs.next()) {
                 Paquete p = new Paquete();
@@ -63,50 +114,75 @@ public class PaqueteDAO {
                 p.setImagen(rs.getString("imagen"));
                 p.setCategoria(rs.getString("categoria"));
                 p.setDetallePaquete(rs.getString("detallePaquete"));
-                promociones.add(p);
+                paquetes.add(p);
             }
         } catch (SQLException e) {
         }
-        return promociones;
+        return paquetes;
     }
 
-    //Metodo para agregar nuevos tours
-    public String insert(Paquete p) {
+    //Metodo para eliminar paquetes
+    public String delete(int idp) {
         String resp = "";
-        //Consulta SQL para insertar dentro de la tabla paquete
-        String insert_paquete = "INSERT INTO paquete (nombrePaquete, descripcionPaquete, precioPaquete, imagen, categoria, detallePaquete) VALUES(?,?,?,?,?,?)";
+        //PreparedStatement ps;
+        //ResultSet rs;
+        String cadSQL = "DELETE FROM paquete where idPaquete=?";
         try {
-            ps = cnx.prepareStatement(insert_paquete);
-            ps.setString(1, p.getNombrePaquete());
-            ps.setString(2, p.getDescripcionPaquete());
-            ps.setDouble(3, p.getPrecioPaquete());
-            ps.setString(4, p.getImagen());
-            ps.setString(5, p.getCategoria());
-            ps.setString(6, p.getDetallePaquete());
+            ps = cnx.prepareStatement(cadSQL);
+            ps.setInt(1, idp);
+            int ctos = ps.executeUpdate();
+            if (ctos == 0) {
+                resp = "No se ha eliminado";
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            resp = ex.getMessage();
+        }
+        return resp;
+    }
 
-            // Ejecutar la consulta preparada para insertar el paquete
-            int filasAfectadas = ps.executeUpdate();
+    //Metodo para agregar nuevos paquetes
+    public String insertUpdate(Paquete p) {
+        String resp = "";
+        String cadSQL = "";
 
-            if (filasAfectadas > 0) {
-                resp = "Paquete insertado correctamente";
+        try {
+            if (p.getIdPaquete() == 0) {
+                // Es una inserción
+                cadSQL = "INSERT INTO paquete (nombrePaquete, descripcionPaquete, precioPaquete, imagen, categoria, detallePaquete) VALUES(?,?,?,?,?,?)";
+                ps = cnx.prepareStatement(cadSQL);
+
+                ps.setString(1, p.getNombrePaquete());
+                ps.setString(2, p.getDescripcionPaquete());
+                ps.setDouble(3, p.getPrecioPaquete());
+                ps.setString(4, p.getImagen());
+                ps.setString(5, p.getCategoria());
+                ps.setString(6, p.getDetallePaquete());
             } else {
-                resp = "Error al insertar el paquete";
+                // Es una actualización
+                cadSQL = "UPDATE paquete SET nombrePaquete=?, descripcionPaquete=?, precioPaquete=?, imagen=?, categoria=?, detallePaquete=? WHERE idPaquete=?";
+                ps = cnx.prepareStatement(cadSQL);
+
+                ps.setString(1, p.getNombrePaquete());
+                ps.setString(2, p.getDescripcionPaquete());
+                ps.setDouble(3, p.getPrecioPaquete());
+                ps.setString(4, p.getImagen());
+                ps.setString(5, p.getCategoria());
+                ps.setString(6, p.getDetallePaquete());
+                ps.setInt(7, p.getIdPaquete());
+            }
+
+            int ctos = ps.executeUpdate();
+
+            if (ctos > 0) {
+                resp = "Registro exitoso";
+            } else {
+                resp = "No se ha registrado";
             }
         } catch (SQLException ex) {
-            resp = "Error en la inserción: " + ex.getMessage();
-        } finally {
-            try {
-                // Cerrar recursos
-                if (ps != null) {
-                    ps.close();
-                }
-                if (cnx != null) {
-                    cnx.close();
-                }
-            } catch (SQLException e) {
-                resp = "Error al cerrar la conexión: " + e.getMessage();
-            }
+            resp = "Error en la inserción o actualización: " + ex.getMessage();
         }
+
         return resp;
     }
 }
