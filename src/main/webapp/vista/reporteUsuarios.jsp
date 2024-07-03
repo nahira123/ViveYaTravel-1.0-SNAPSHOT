@@ -15,13 +15,9 @@
     <jsp:include page="ADMIHeader.jsp"/>
 
     <body>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <h1>Reporte usuarios</h1>     
-
+        
+        <a class="ex" href="<%=request.getContextPath()%>/srvReporteUsuarios?accion=excel"><i class="fas fa-file-pdf"></i>Exportar Excel</a>
+        <a class="ex" href="<%=request.getContextPath()%>/srvReporteUsuarios?accion=pdf"><i class="fas fa-file-pdf"></i>Exportar PDF</a>
 
         <table class="tablaRep">
             <thead>
@@ -32,7 +28,6 @@
                     <td>TELÉFONO</td>
                     <td>DNI</td>
                     <td>CORREO</td>
-                    <td>CONTRASEÑA</td>
                 </tr>
             </thead>
             <tbody>
@@ -44,7 +39,6 @@
                         <td>${u.nroCelular}</td>
                         <td>${u.nroDni}</td>
                         <td>${u.correoElectronico}</td>
-                        <td>${u.clave}</td>
                     </tr>
                 </c:forEach>
             </tbody>

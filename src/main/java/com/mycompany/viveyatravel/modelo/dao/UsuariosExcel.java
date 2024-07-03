@@ -4,6 +4,8 @@ import com.mycompany.viveyatravel.modelo.dto.usuario;
 import com.mycompany.viveyatravel.servicios.ConectarBD;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,14 +14,17 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.ClientAnchor;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFDrawing;
+import org.apache.poi.xssf.usermodel.XSSFPicture;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
 
 public class UsuariosExcel {
 
@@ -39,8 +44,40 @@ public class UsuariosExcel {
         XSSFWorkbook libro = new XSSFWorkbook();
         XSSFSheet hoja = libro.createSheet("Usuarios");
 
+        //Datos de la empresa
+        String nom = "Vive Ya Travel";
+        String ruc = "987654321";
+        String cel = "987654321";
+        String logo ="logo";
+
+        Row infoAgencia = hoja.createRow(0); //Fila para la información de la empresa
+
+        //Crear celdas para la información
+        Cell celLogo = infoAgencia.createCell(0);
+        celLogo.setCellValue(logo);
+        
+        Cell celNom = infoAgencia.createCell(3);
+        celNom.setCellValue("Empresa: "+ nom);
+
+        Cell celRuc = infoAgencia.createCell(4);
+        celRuc.setCellValue("R.U.C: " + ruc);
+
+        Cell celCel = infoAgencia.createCell(5);
+        celCel.setCellValue("Teléfono: " + cel);
+
+        //Estilo para la información de la empresa
+        XSSFCellStyle estiloInfo = libro.createCellStyle();
+        Font fontInfo = libro.createFont();
+        fontInfo.setBold(true);
+        estiloInfo.setFont(fontInfo);
+
+        // Aplicar estilo
+        celNom.setCellStyle(estiloInfo);
+        celRuc.setCellStyle(estiloInfo);
+        celCel.setCellStyle(estiloInfo);
+        
         // Crear la fila de cabecera y poner los titulos
-        Row cabecera = hoja.createRow(0);
+        Row cabecera = hoja.createRow(5);
         String[] titulos = {"ID", "NOMBRE", "APELLIDO", "TELÉFONO", "DNI", "CORREO", "CONTRASEÑA"};
 
         // Crear estilo para la cabecera
@@ -73,7 +110,7 @@ public class UsuariosExcel {
         estiloCelda.setBorderRight(BorderStyle.THIN);
 
         // Llenar la hoja con l de los usuarios
-        for (int i = 0; i < repUsuario.size(); i++) {
+        for (int i = 5; i < repUsuario.size(); i++) {
             usuario us = repUsuario.get(i);
             Row fd = hoja.createRow(i + 1); // Se empieza desde la segunda fila
             fd.createCell(0).setCellValue(us.getIdUsuario());
@@ -83,7 +120,7 @@ public class UsuariosExcel {
             fd.createCell(4).setCellValue(us.getNroDni());
             fd.createCell(5).setCellValue(us.getCorreoElectronico());
             fd.createCell(6).setCellValue(us.getClave());
-            
+
             // Aplicar estilo a cada celda de la fila de datos
             for (int j = 0; j < titulos.length; j++) {
                 fd.getCell(j).setCellStyle(estiloCelda);

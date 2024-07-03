@@ -2,6 +2,10 @@
 .tablaRep {
     width: 100%;
     border-collapse: collapse;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    margin-left: 80px;
+    max-width: 1000px;
 }
 
 /* Estilos para las celdas de la tabla */
@@ -12,8 +16,9 @@
 }
 
 /* Estilos para la cabecera de la tabla */
-.tablaRep th {
-    background-color: #f2f2f2;
+.tablaRep thead {
+    background-color: #4887c5;
+    color: white;
 }
 
 /* Estilos para las filas impares de la tabla */
@@ -26,3 +31,8 @@
     background-color: #ffffff;
 }
 
+/*Estilo para los íconos de descarga*/
+a i {
+    margin-top: 80px;
+    margin-left: 200px;
+}

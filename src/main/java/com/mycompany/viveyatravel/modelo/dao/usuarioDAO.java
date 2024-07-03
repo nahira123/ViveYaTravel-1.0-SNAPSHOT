@@ -3,12 +3,26 @@ package com.mycompany.viveyatravel.modelo.dao;
 import com.mycompany.viveyatravel.modelo.dto.cargo;
 import com.mycompany.viveyatravel.modelo.dto.usuario;
 import com.mycompany.viveyatravel.servicios.ConectarBD;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 
 public class usuarioDAO {
 
@@ -119,7 +133,6 @@ public List<usuario> repUsuario() {
             u.setNroCelular(rs.getInt("nroCelular"));
             u.setNroDni(rs.getInt("nroDni"));
             u.setCorreoElectronico(rs.getString("correoElectronico"));
-            u.setClave(rs.getString("clave"));
             repUsuario.add(u);
         }
     } catch (SQLException e) {
@@ -138,5 +151,108 @@ public List<usuario> repUsuario() {
     }
     return repUsuario;
 }
+
+    public ByteArrayInputStream exportarExcel() throws IOException {
+        //Obtener lista de usuarios
+        List<usuario> repUsuario = repUsuario();
+        //Field[] campos = usuario.class.getDeclaredFields();
+
+        //Crear el libro y hoja de excel
+        Workbook libro = new HSSFWorkbook();
+        ByteArrayOutputStream flujo = new ByteArrayOutputStream();
+        Sheet hoja = libro.createSheet("Usuarios");
+
+        //Datos de la empresa
+        String nom = "Vive Ya Travel";
+        String ruc = "987654321";
+        String cel = "987654321";
+        String logo ="logo";
+
+        Row infoAgencia = hoja.createRow(0); //Fila para la información de la empresa
+
+        //Crear celdas para la información
+        Cell celLogo = infoAgencia.createCell(0);
+        celLogo.setCellValue(logo);
+        
+        Cell celNom = infoAgencia.createCell(3);
+        celNom.setCellValue("Empresa: "+ nom);
+
+        Cell celRuc = infoAgencia.createCell(4);
+        celRuc.setCellValue("R.U.C: " + ruc);
+
+        Cell celCel = infoAgencia.createCell(5);
+        celCel.setCellValue("Teléfono: " + cel);
+
+        //Estilo para la información de la empresa
+        CellStyle estiloInfo = libro.createCellStyle();
+        Font fontInfo = libro.createFont();
+        fontInfo.setBold(true);
+        estiloInfo.setFont(fontInfo);
+
+        // Aplicar estilo
+        celNom.setCellStyle(estiloInfo);
+        celRuc.setCellStyle(estiloInfo);
+        celCel.setCellStyle(estiloInfo);
+        
+        // Crear la fila de cabecera y poner los titulos
+        Row cabecera = hoja.createRow(4);
+        String[] titulos = {"ID", "NOMBRE", "APELLIDO", "TELÉFONO", "DNI", "CORREO"};
+
+        // Crear estilo para la cabecera
+        CellStyle estiloCabecera = libro.createCellStyle();
+        estiloCabecera.setFillForegroundColor(IndexedColors.PALE_BLUE.getIndex());
+        estiloCabecera.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        estiloCabecera.setBorderTop(BorderStyle.THIN);
+        estiloCabecera.setBorderBottom(BorderStyle.THIN);
+        estiloCabecera.setBorderLeft(BorderStyle.THIN);
+        estiloCabecera.setBorderRight(BorderStyle.THIN);
+        Font font = libro.createFont();
+        font.setBold(true);
+        estiloCabecera.setFont(font);
+
+        // Llenar la cabecera con los títulos
+        for (int i = 0; i < titulos.length; i++) {
+            Cell cell = cabecera.createCell(i);
+            cell.setCellValue(titulos[i]);
+            //Aplicar el estilo
+            cell.setCellStyle(estiloCabecera);
+        }
+
+        // Estilo para las celdas de datos
+        CellStyle estiloCelda = libro.createCellStyle();
+        estiloCelda.setFillForegroundColor(IndexedColors.WHITE1.getIndex());
+        estiloCelda.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        estiloCelda.setBorderTop(BorderStyle.THIN);
+        estiloCelda.setBorderBottom(BorderStyle.THIN);
+        estiloCelda.setBorderLeft(BorderStyle.THIN);
+        estiloCelda.setBorderRight(BorderStyle.THIN);
+
+        // Llenar la hoja con los datos de los usuarios
+        for (int i = 0; i < repUsuario.size(); i++) {
+            usuario us = repUsuario.get(i);
+            Row fd = hoja.createRow(i + 5); // Se empieza desde la segunda fila
+            fd.createCell(0).setCellValue(us.getIdUsuario());
+            fd.createCell(1).setCellValue(us.getNombre());
+            fd.createCell(2).setCellValue(us.getApellido());
+            fd.createCell(3).setCellValue(us.getNroCelular());
+            fd.createCell(4).setCellValue(us.getNroDni());
+            fd.createCell(5).setCellValue(us.getCorreoElectronico());
+
+            // Aplicar estilo a cada celda de la fila de datos
+            for (int j = 0; j < titulos.length; j++) {
+                fd.getCell(j).setCellStyle(estiloCelda);
+            }
+        }
+
+        //Configuracion de hoja
+        for (int i = 0; i < titulos.length; i++) {
+            hoja.autoSizeColumn(i);
+        }
+
+        libro.write(flujo);
+        libro.close();
+        return new ByteArrayInputStream(flujo.toByteArray());
+
+    }
 
 }
