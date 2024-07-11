@@ -13,6 +13,7 @@
         <link href="${pageContext.request.contextPath}/css/index.css" rel="stylesheet" type="text/css"/>
         <link href="${pageContext.request.contextPath}/css/index.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="styles.css" />
+        <script src="//code.tidio.co/5al8l06rqcmi3eecttdrth0mcufr1dhb.js" async></script>
     </head>
     <body>
         <!-- Incluir el encabezado de la página -->
