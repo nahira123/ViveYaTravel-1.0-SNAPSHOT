@@ -71,7 +71,7 @@
 .invoice-box table tr.item.last td {
     border-bottom: none;
 }
-
+            
 .invoice-box table tr.total td:nth-child(4) {
     border-top: 2px solid #eee;
     font-weight: bold;
@@ -132,7 +132,7 @@
 
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                1
+                
             </div>
             <div class="tab-pane fade show active container" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                 <h2 class="h4 m-4 text-primary">Paquetes</h2>

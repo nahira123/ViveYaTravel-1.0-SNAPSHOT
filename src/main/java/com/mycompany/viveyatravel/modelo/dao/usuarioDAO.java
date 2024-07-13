@@ -6,7 +6,6 @@ import com.mycompany.viveyatravel.servicios.ConectarBD;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,8 +19,6 @@ import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.util.JRLoader;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
@@ -129,7 +126,7 @@ public class usuarioDAO {
 
     public List<usuario> repUsuario() {
         List<usuario> repUsuario = new ArrayList<>();
-        String reporte = "SELECT idUsuario, nombre, apellido, nroCelular, nroDni, correoElectronico, clave FROM usuario WHERE idCargo = 1";
+        String reporte = "SELECT idUsuario, nombre, apellido, nroCelular, nroDni, correoElectronico FROM usuario WHERE idCargo = 1";
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
@@ -266,20 +263,22 @@ public class usuarioDAO {
     }
 
     public JasperPrint exportarPDF(ServletContext context) throws JRException {
-        //Obtener lista de usuarios
-        List<usuario> repUsuario = repUsuario();
-        
-        //Ruta del archivo JRXML
-        String jrxmlFilePath = context.getRealPath("/reporteJasper/Usuario1a.jrxml");
-        
-        //COmpilar el archivo JRXML a Jasper
+        // Ruta del archivo JRXML
+        String jrxmlFilePath = context.getRealPath("/eporteJasper/Usuario1a.jrxml");
+
+        if (jrxmlFilePath == null) {
+            throw new JRException("No se pudo obtener la ruta real del archivo JRXML");
+        }
+
+        // Compilar el archivo JRXML a Jasper
         JasperReport jasperReportFuente = JasperCompileManager.compileReport(jrxmlFilePath);
-        
-        //Llenar el reporte con los datos de la BD
-        JasperPrint jasperPrint =
-                JasperFillManager.fillReport(jasperReportFuente, 
+
+        // Llenar el reporte con los datos (aquí asumo que 'cn' es tu conexión a la base de datos)
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReportFuente, 
                 new HashMap<>(), 
-                new JRBeanCollectionDataSource(repUsuario));
+                cn);
+
         return jasperPrint;
     }
+    
 }

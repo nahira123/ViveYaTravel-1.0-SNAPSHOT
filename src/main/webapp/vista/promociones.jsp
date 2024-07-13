@@ -4,7 +4,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Promociones</title>
+        <%--Referenciar los estilos CSS --%>
         <link href="${pageContext.request.contextPath}/css/header.css" rel="stylesheet" type="text/css"/>
         <link href="${pageContext.request.contextPath}/css/footer.css" rel="stylesheet" type="text/css"/>
         <link href="${pageContext.request.contextPath}/css/tours.css" rel="stylesheet" type="text/css"/>
@@ -48,7 +49,7 @@
                                     </div>
                                     <div class="modal-body">
 
-                                        <!<!-- Puntos de recojo -->
+                                        <!-- Puntos de recojo -->
                                         <div class="bloque-puntos-de-recojo">
                                             <div class="texto-descripcion texto-descripcion-itinerario">
                                                 <span class="numero">Puntos de abordo</span>
@@ -76,6 +77,7 @@
                                             ${o.getDetallePaquete()}
                                         </span>>
                                     </div>
+                                    <!-- Bottones -->    
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                                         <button type="button" class="btn btn-primary">Reservar</button>
@@ -87,12 +89,14 @@
                 </c:forEach>
             </div>
         </div>
-
+        <!-- Script para mostrar la ventana modal -->
         <script type="text/javascript">
             document.addEventListener('DOMContentLoaded', (event) => {
+                //Referencia para el modar ID=exampleModal
                 const exampleModal = document.getElementById('exampleModal');
                 exampleModal.addEventListener('show.bs.modal', (event) => {
 
+                    //Obtención de los atributos
                     const button = event.relatedTarget;
                     const tourTitulo = button.getAttribute('data-Titulo');
                     const tourDetalle = button.getAttribute('data-Detalle');
@@ -101,6 +105,7 @@
                     const modalTitle = exampleModal.querySelector('#tourTitulo');
                     const modalBodyInput = exampleModal.querySelector('#tourDetalle');
 
+                    //Actualizar los valores
                     modalTitle.textContent = tourTitulo;
                     modalBodyInput.textContent = tourDetalle;
                 });

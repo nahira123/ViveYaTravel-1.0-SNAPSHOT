@@ -5,32 +5,19 @@ import com.mycompany.viveyatravel.modelo.dto.usuario;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.export.JRPdfExporter;
-import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.engine.util.JRSaver;
-import net.sf.jasperreports.export.SimpleExporterInput;
-import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 
 public class srvReporteUsuarios extends HttpServlet {
-
+    
     usuarioDAO usdao = new usuarioDAO();
     List<usuario> repUsuario = new ArrayList<>();
 
@@ -63,16 +50,18 @@ public class srvReporteUsuarios extends HttpServlet {
                         try {
                     //Llenar el reporte con datos
                     JasperPrint jasperPrint = new usuarioDAO().exportarPDF(getServletContext());
-                    
+
                     //Configurar la respuesta HTTP
                     response.setContentType("application/pdf");
                     response.setCharacterEncoding("UTF-8");
-                    response.setHeader("Content-Dispositon", "inline; filename=reporte.pdf");
-                    
+                    response.setHeader("Content-Disposition", "inline; filename=reporte.pdf");
+
                     //Esportar el reporte a la salida del servlet
-                            JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
+                    JasperExportManager.exportReportToPdfStream(jasperPrint,
+                            response.getOutputStream());
+
                 } catch (JRException e) {
-                    throw new ServletException(e);
+                    throw new ServletException("Error en la generación del reporte", e);
                 }
 
                 break;
@@ -117,5 +106,4 @@ public class srvReporteUsuarios extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

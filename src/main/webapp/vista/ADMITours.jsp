@@ -21,6 +21,7 @@
     <body>
         <h1 class="tCat">Crea recuerdos...</h1>
 
+        <!-- Formulario para añadir nuevos tours -->
         <form action="<%= request.getContextPath()%>/srvADMIPaquete" method="post" class="formulario" id="formPaquetes">
             <fieldset>
                 <label>ID</label>

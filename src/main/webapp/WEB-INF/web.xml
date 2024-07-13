@@ -36,6 +36,10 @@
         <servlet-name>srvReporteUsuarios</servlet-name>
         <servlet-class>com.mycompany.viveyatravel.controladores.srvReporteUsuarios</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>srvReportePDF</servlet-name>
+        <servlet-class>com.mycompany.viveyatravel.controladores.srvReportePDF</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Controlador</servlet-name>
         <url-pattern>/Controlador</url-pattern>
@@ -71,6 +75,10 @@
     <servlet-mapping>
         <servlet-name>srvReporteUsuarios</servlet-name>
         <url-pattern>/srvReporteUsuarios</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>srvReportePDF</servlet-name>
+        <url-pattern>/srvReportePDF</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
