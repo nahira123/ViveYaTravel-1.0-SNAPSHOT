@@ -51,7 +51,9 @@ public class srvReporteUsuarios extends HttpServlet {
                     JasperPrint jasperPrint = new usuarioDAO().exportarPDF(getServletContext());
 
                     // Configurar el encabezado para descarga del archivo
-                    response.setHeader("Content-Disposition", "attachment; filename=reporte.pdf");
+                    response.setContentType("application/pdf");
+                    response.setCharacterEncoding("UTF-8");
+                    response.setHeader("Content-Disposition", "inline; filename=reporte.pdf");
 
                     // Exportar el reporte a la salida del servlet
                     JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());

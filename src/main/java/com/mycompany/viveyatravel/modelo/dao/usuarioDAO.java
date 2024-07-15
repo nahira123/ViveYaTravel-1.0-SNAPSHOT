@@ -350,19 +350,33 @@ public class usuarioDAO {
 
     public JasperPrint exportarPDF(ServletContext context) throws JRException {
         // Ruta del archivo JRXML
-        String jrxmlFilePath = context.getRealPath("/reporteJasper/report2.jrxml");
+        String jrxmlFilePath = context.getRealPath("/reporteJasper/ReporteUsuarios.jrxml");
 
         if (jrxmlFilePath == null) {
             throw new JRException("No se pudo obtener la ruta real del archivo JRXML");
         }
 
         // Compilar el archivo JRXML a Jasper
-        JasperReport jasperReportFuente = JasperCompileManager.compileReport(jrxmlFilePath);
+        //JasperReport jasperReportFuente = JasperCompileManager.compileReport(jrxmlFilePath);
+        // Compilar el archivo JRXML a Jasper
+        JasperReport jasperReportFuente;
+        try {
+            jasperReportFuente = JasperCompileManager.compileReport(jrxmlFilePath);
+        } catch (JRException e) {
+            throw new JRException("Error al compilar el archivo JRXML", e);
+        }
 
-        // Llenar el reporte con los datos (aquí asumo que 'cn' es tu conexión a la base de datos)
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReportFuente,
-                new HashMap<>(),
-                cn);
+        // Llenar el reporte con los datos
+        //JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReportFuente,
+         //       new HashMap<>(),
+         //       cn);
+         
+         JasperPrint jasperPrint;
+        try {
+            jasperPrint = JasperFillManager.fillReport(jasperReportFuente, new HashMap<>(), cn);
+        } catch (JRException e) {
+            throw new JRException("Error al llenar el reporte", e);
+        }
 
         return jasperPrint;
     }
