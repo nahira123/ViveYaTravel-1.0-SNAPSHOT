@@ -45,7 +45,9 @@
                     <input type="password" name="clave" id="clave" required>
                     <label>Contraseña</label>
                 </div>
-                <div class="recordar">¿Olvidaste tu contraseña?</div>
+                <div class="recordar">
+                    ¿Olvidaste tu contraseña?
+                </div>
                 <input type="submit" name="verificar" id="Verificar" value="iniciar">
                 <div class="registrarse">
                     Crear <a href="${pageContext.request.contextPath}/vista/registrar.jsp">cuenta</a>
