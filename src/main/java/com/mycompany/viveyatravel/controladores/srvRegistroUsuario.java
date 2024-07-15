@@ -62,10 +62,10 @@ public class srvRegistroUsuario extends HttpServlet {
                             // Redireccionar una vez el registro fue exitoso
                             response.sendRedirect("./vista/iniciarSesion.jsp?registro=exito");
                         } else {
-                            response.sendRedirect("./vista/error.jsp");
+                            response.sendRedirect("./vista/registrar.jsp?registro=correo");
                         }
                     } else {
-                        response.sendRedirect("./vista/error.jsp");
+                        response.sendRedirect("./vista/registrar.jsp?registro=dni");
                     }
                     // Registra el usuario en la base de datos
 
