@@ -6,6 +6,8 @@ import com.mycompany.viveyatravel.servicios.ConectarBD;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,13 +21,18 @@ import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
+import org.apache.commons.compress.utils.IOUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.ClientAnchor;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.Drawing;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Picture;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -210,48 +217,75 @@ public class usuarioDAO {
     }
 
     public ByteArrayInputStream exportarExcel() throws IOException {
-        //Obtener lista de usuarios
+        // Obtener lista de usuarios (asumo que repUsuario() devuelve List<Usuario>)
         List<usuario> repUsuario = repUsuario();
-        //Field[] campos = usuario.class.getDeclaredFields();
 
-        //Crear el libro y hoja de excel
+        // Crear el libro y hoja de Excel
         Workbook libro = new HSSFWorkbook();
         ByteArrayOutputStream flujo = new ByteArrayOutputStream();
         Sheet hoja = libro.createSheet("Usuarios");
 
-        //Datos de la empresa
+        // Datos de la empresa
         String nom = "Vive Ya Travel";
-        String ruc = "987654321";
+        String ruc = "987654321324";
         String cel = "987654321";
-        String logo = "logo";
+        String logoURL = "https://www.viveyatravel.com/imagenes/logo-web-vive-ya-travel-2.png";
 
-        Row infoAgencia = hoja.createRow(0); //Fila para la información de la empresa
+        // Descargar el logo desde la URL y ajustar el tamaño
+        URL url = new URL(logoURL);
+        InputStream is = url.openStream();
+        byte[] bytes = IOUtils.toByteArray(is);
+        is.close();
 
-        //Crear celdas para la información
-        Cell celLogo = infoAgencia.createCell(0);
-        celLogo.setCellValue(logo);
+        int logoHeight = 150; // Altura deseada en puntos
+        int logoWidth = 250; // Ancho deseado en puntos
 
-        Cell celNom = infoAgencia.createCell(3);
-        celNom.setCellValue("Empresa: " + nom);
+        int pictureIdx = libro.addPicture(bytes, Workbook.PICTURE_TYPE_PNG);
+        CreationHelper helper = libro.getCreationHelper();
+        Drawing drawing = hoja.createDrawingPatriarch();
+        ClientAnchor anchor = helper.createClientAnchor();
+        anchor.setCol1(0);
+        anchor.setRow1(0);
+        anchor.setCol2(1);
+        anchor.setRow2(4);
 
-        Cell celRuc = infoAgencia.createCell(4);
-        celRuc.setCellValue("R.U.C: " + ruc);
+        // Crear la imagen y ajustar tamaño
+        Picture pict = drawing.createPicture(anchor, pictureIdx);
+        pict.resize(1.0, 1.0); // Redimensionar al tamaño original de la imagen
+        pict.resize(logoWidth / pict.getImageDimension().getWidth(), logoHeight / pict.getImageDimension().getHeight());
 
-        Cell celCel = infoAgencia.createCell(5);
-        celCel.setCellValue("Teléfono: " + cel);
+        // Establecer el encabezado con el nombre, RUC y teléfono
+        Row headerRow = hoja.createRow(0);
+        Cell cellEmpresa = headerRow.createCell(2);
+        cellEmpresa.setCellValue(nom);
+        CellStyle styleEmpresa = libro.createCellStyle();
+        Font fontEmpresa = libro.createFont();
+        fontEmpresa.setFontHeightInPoints((short) 18);
+        fontEmpresa.setBold(true);
+        styleEmpresa.setFont(fontEmpresa);
+        cellEmpresa.setCellStyle(styleEmpresa);
 
-        //Estilo para la información de la empresa
-        CellStyle estiloInfo = libro.createCellStyle();
-        Font fontInfo = libro.createFont();
-        fontInfo.setBold(true);
-        estiloInfo.setFont(fontInfo);
+        Row rucRow = hoja.createRow(1);
+        Cell cellRucLabel = rucRow.createCell(2);
+        cellRucLabel.setCellValue("R.U.C:");
+        CellStyle styleLabel = libro.createCellStyle();
+        Font fontLabel = libro.createFont();
+        fontLabel.setBold(true);
+        styleLabel.setFont(fontLabel);
+        cellRucLabel.setCellStyle(styleLabel);
 
-        // Aplicar estilo
-        celNom.setCellStyle(estiloInfo);
-        celRuc.setCellStyle(estiloInfo);
-        celCel.setCellStyle(estiloInfo);
+        Cell cellRucValue = rucRow.createCell(3);
+        cellRucValue.setCellValue(ruc);
 
-        // Crear la fila de cabecera y poner los titulos
+        Row telRow = hoja.createRow(2);
+        Cell cellTelLabel = telRow.createCell(2);
+        cellTelLabel.setCellValue("Teléfono:");
+        cellTelLabel.setCellStyle(styleLabel);
+
+        Cell cellTelValue = telRow.createCell(3);
+        cellTelValue.setCellValue(cel);
+
+        // Crear la fila de cabecera y poner los títulos
         Row cabecera = hoja.createRow(4);
         String[] titulos = {"ID", "NOMBRE", "APELLIDO", "TELÉFONO", "DNI", "CORREO"};
 
@@ -271,7 +305,7 @@ public class usuarioDAO {
         for (int i = 0; i < titulos.length; i++) {
             Cell cell = cabecera.createCell(i);
             cell.setCellValue(titulos[i]);
-            //Aplicar el estilo
+            // Aplicar el estilo
             cell.setCellStyle(estiloCabecera);
         }
 
@@ -287,7 +321,7 @@ public class usuarioDAO {
         // Llenar la hoja con los datos de los usuarios
         for (int i = 0; i < repUsuario.size(); i++) {
             usuario us = repUsuario.get(i);
-            Row fd = hoja.createRow(i + 5); // Se empieza desde la segunda fila
+            Row fd = hoja.createRow(i + 5); // Empezar desde la fila siguiente a la cabecera
             fd.createCell(0).setCellValue(us.getIdUsuario());
             fd.createCell(1).setCellValue(us.getNombre());
             fd.createCell(2).setCellValue(us.getApellido());
@@ -301,20 +335,22 @@ public class usuarioDAO {
             }
         }
 
-        //Configuracion de hoja
+        // Ajustar tamaño de columnas
         for (int i = 0; i < titulos.length; i++) {
             hoja.autoSizeColumn(i);
         }
 
+        // Escribir el libro en el flujo de salida
         libro.write(flujo);
         libro.close();
-        return new ByteArrayInputStream(flujo.toByteArray());
 
+        return new ByteArrayInputStream(flujo.toByteArray());
     }
+
 
     public JasperPrint exportarPDF(ServletContext context) throws JRException {
         // Ruta del archivo JRXML
-        String jrxmlFilePath = context.getRealPath("/eporteJasper/Usuario1a.jrxml");
+        String jrxmlFilePath = context.getRealPath("/reporteJasper/report2.jrxml");
 
         if (jrxmlFilePath == null) {
             throw new JRException("No se pudo obtener la ruta real del archivo JRXML");

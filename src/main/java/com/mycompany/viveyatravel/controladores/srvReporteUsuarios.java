@@ -17,13 +17,12 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
 
 public class srvReporteUsuarios extends HttpServlet {
-    
+
     usuarioDAO usdao = new usuarioDAO();
     List<usuario> repUsuario = new ArrayList<>();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
         OutputStream out = response.getOutputStream();
         Connection conn = null;
         repUsuario = usdao.repUsuario();
@@ -51,14 +50,11 @@ public class srvReporteUsuarios extends HttpServlet {
                     //Llenar el reporte con datos
                     JasperPrint jasperPrint = new usuarioDAO().exportarPDF(getServletContext());
 
-                    //Configurar la respuesta HTTP
-                    response.setContentType("application/pdf");
-                    response.setCharacterEncoding("UTF-8");
-                    response.setHeader("Content-Disposition", "inline; filename=reporte.pdf");
+                    // Configurar el encabezado para descarga del archivo
+                    response.setHeader("Content-Disposition", "attachment; filename=reporte.pdf");
 
-                    //Esportar el reporte a la salida del servlet
-                    JasperExportManager.exportReportToPdfStream(jasperPrint,
-                            response.getOutputStream());
+                    // Exportar el reporte a la salida del servlet
+                    JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
 
                 } catch (JRException e) {
                     throw new ServletException("Error en la generación del reporte", e);
@@ -73,7 +69,7 @@ public class srvReporteUsuarios extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
