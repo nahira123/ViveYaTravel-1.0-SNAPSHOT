@@ -122,8 +122,58 @@ public class usuarioDAO {
             }
         }
     }
-//----------------------
 
+    public boolean existeUsuarioPorDni(int nroDni) throws SQLException {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String cadSQL = "SELECT COUNT(*) FROM usuario WHERE nroDni = ?"; //Verifica si existe un dni que ya esta siendo usado
+        boolean existe = false;
+        try {
+            ps = cn.prepareStatement(cadSQL);
+            ps.setInt(1, nroDni);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                existe = rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al verificar la existencia del usuario: " + e.getMessage());
+        } finally {
+            if (rs != null && !rs.isClosed()) {
+                rs.close();
+            }
+            if (ps != null && !ps.isClosed()) {
+                ps.close();
+            }
+        }
+        return existe;
+    }
+    
+    public boolean existeUsuarioPorCorreo(String correoElectronico) throws SQLException {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String cadSQL = "SELECT COUNT(*) FROM usuario WHERE correoElectronico = ?"; //Verifica si existe un dni que ya esta siendo usado
+        boolean existeCorreo = false;
+        try {
+            ps = cn.prepareStatement(cadSQL);
+            ps.setString(1, correoElectronico);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                existeCorreo = rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al verificar la existencia del usuario: " + e.getMessage());
+        } finally {
+            if (rs != null && !rs.isClosed()) {
+                rs.close();
+            }
+            if (ps != null && !ps.isClosed()) {
+                ps.close();
+            }
+        }
+        return existeCorreo;
+    }
+
+//----------------------
     public List<usuario> repUsuario() {
         List<usuario> repUsuario = new ArrayList<>();
         String reporte = "SELECT idUsuario, nombre, apellido, nroCelular, nroDni, correoElectronico FROM usuario WHERE idCargo = 1";
@@ -274,11 +324,11 @@ public class usuarioDAO {
         JasperReport jasperReportFuente = JasperCompileManager.compileReport(jrxmlFilePath);
 
         // Llenar el reporte con los datos (aquí asumo que 'cn' es tu conexión a la base de datos)
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReportFuente, 
-                new HashMap<>(), 
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReportFuente,
+                new HashMap<>(),
                 cn);
 
         return jasperPrint;
     }
-    
+
 }

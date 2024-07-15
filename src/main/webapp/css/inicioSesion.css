@@ -143,3 +143,7 @@ input[type="submit"]:hover{
     color: #6C3483;
     transition: top 0.3s ease, color 0.3s ease;
 }
+
+.custom-alert-container{
+    margin-left: 0;
+}

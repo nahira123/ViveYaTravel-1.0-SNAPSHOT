@@ -18,11 +18,11 @@ public class srvRegistroUsuario extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String accion = request.getParameter("registrar");  //Obtiene el valor de registrar de la solicitud
-        
+
         if (accion != null) { //Si la accion no es nula
             if (accion.equals("Registrarte")) {  //Si la accion es igual a Registrarte realiza el bloque de codigo
                 //Se obtiene los valores del formulario
-                String nombre = request.getParameter("nombre");  
+                String nombre = request.getParameter("nombre");
                 String apellido = request.getParameter("apellido");
                 String nroCelularStr = request.getParameter("nroCelular");
                 String nroDniStr = request.getParameter("nroDni");
@@ -40,7 +40,6 @@ public class srvRegistroUsuario extends HttpServlet {
                     nroDni = Integer.parseInt(nroDniStr);
                 }
 
-                
                 usuario usuario = new usuario();  //Se instancia el objeto usuario
                 usuario.setNombre(nombre);
                 usuario.setApellido(apellido);
@@ -53,12 +52,23 @@ public class srvRegistroUsuario extends HttpServlet {
                 usuarioDAO usuarioDAO = new usuarioDAO();
 
                 try {
+                    boolean existe = usuarioDAO.existeUsuarioPorDni(nroDni);
+                    boolean existeCorreo = usuarioDAO.existeUsuarioPorCorreo(correoElectronico);
+
+                    if (!existe) {
+                        if (!existeCorreo) {
+                            usuarioDAO.registrar(usuario);
+                            correo.enviarCorreoBienvenida(correoElectronico, nombre);
+                            // Redireccionar una vez el registro fue exitoso
+                            response.sendRedirect("./vista/iniciarSesion.jsp?registro=exito");
+                        } else {
+                            response.sendRedirect("./vista/error.jsp");
+                        }
+                    } else {
+                        response.sendRedirect("./vista/error.jsp");
+                    }
                     // Registra el usuario en la base de datos
-                    usuarioDAO.registrar(usuario);
-                    correo.enviarCorreoBienvenida(correoElectronico, nombre);
-                    System.out.println(correoElectronico);
-                    // Redireccionar una vez el registro fue exitoso
-                    response.sendRedirect("./vista/iniciarSesion.jsp");
+
                 } catch (Exception ex) {
                     // En caso de error
                     response.sendRedirect("error.jsp");
