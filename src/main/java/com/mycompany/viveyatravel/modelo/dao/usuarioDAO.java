@@ -21,6 +21,7 @@ import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.apache.commons.compress.utils.IOUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.BorderStyle;
@@ -154,7 +155,7 @@ public class usuarioDAO {
         }
         return existe;
     }
-    
+
     public boolean existeUsuarioPorCorreo(String correoElectronico) throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -217,7 +218,7 @@ public class usuarioDAO {
     }
 
     public ByteArrayInputStream exportarExcel() throws IOException {
-        // Obtener lista de usuarios (asumo que repUsuario() devuelve List<Usuario>)
+        // Obtener lista de usuarios 
         List<usuario> repUsuario = repUsuario();
 
         // Crear el libro y hoja de Excel
@@ -237,8 +238,8 @@ public class usuarioDAO {
         byte[] bytes = IOUtils.toByteArray(is);
         is.close();
 
-        int logoHeight = 150; // Altura deseada en puntos
-        int logoWidth = 250; // Ancho deseado en puntos
+        int logoHeight = 150; // Altura de la imagen
+        int logoWidth = 250; // Ancho de la imagen
 
         int pictureIdx = libro.addPicture(bytes, Workbook.PICTURE_TYPE_PNG);
         CreationHelper helper = libro.getCreationHelper();
@@ -254,7 +255,7 @@ public class usuarioDAO {
         pict.resize(1.0, 1.0); // Redimensionar al tamaño original de la imagen
         pict.resize(logoWidth / pict.getImageDimension().getWidth(), logoHeight / pict.getImageDimension().getHeight());
 
-        // Establecer el encabezado con el nombre, RUC y teléfono
+        // Establecer el encabezado 
         Row headerRow = hoja.createRow(0);
         Cell cellEmpresa = headerRow.createCell(2);
         cellEmpresa.setCellValue(nom);
@@ -347,8 +348,9 @@ public class usuarioDAO {
         return new ByteArrayInputStream(flujo.toByteArray());
     }
 
-
     public JasperPrint exportarPDF(ServletContext context) throws JRException {
+        // Obtener lista de usuarios 
+        List<usuario> repUsuario = repUsuario();
         // Ruta del archivo JRXML
         String jrxmlFilePath = context.getRealPath("/reporteJasper/usuarios1.jrxml");
 
@@ -366,14 +368,18 @@ public class usuarioDAO {
             throw new JRException("Error al compilar el archivo JRXML", e);
         }
 
+        // Crear un datasource para llenar el reporte
+        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(repUsuario);
+
         // Llenar el reporte con los datos
         //JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReportFuente,
-         //       new HashMap<>(),
-         //       cn);
-         
-         JasperPrint jasperPrint;
+        //       new HashMap<>(),
+        //       cn);
+        JasperPrint jasperPrint;
         try {
-            jasperPrint = JasperFillManager.fillReport(jasperReportFuente, new HashMap<>(), cn);
+            jasperPrint = JasperFillManager.fillReport(jasperReportFuente,
+                    new HashMap<>(),
+                    dataSource);
         } catch (JRException e) {
             throw new JRException("Error al llenar el reporte", e);
         }

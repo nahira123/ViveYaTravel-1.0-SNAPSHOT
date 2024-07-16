@@ -47,11 +47,11 @@
                     <label>Apellido</label>
                 </div>
                 <div class="registro">
-                    <input type="text" name="nroCelular" id="celular" required>
+                    <input type="text" maxlength="9" name="nroCelular" id="celular" required>
                     <label>Celular</label>
                 </div>
                 <div class="registro">
-                    <input type="text" name="nroDni" id="dni" required>
+                    <input type="text" maxlength="8" name="nroDni" id="dni" required>
                     <label>DNI</label>
                 </div>
                 <div class="registro">

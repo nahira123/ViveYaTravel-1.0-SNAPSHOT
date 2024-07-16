@@ -1,9 +1,12 @@
 package com.mycompany.viveyatravel.controladores;
 
 import com.mycompany.viveyatravel.modelo.dao.usuarioDAO;
+import com.mycompany.viveyatravel.modelo.dto.usuario;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
@@ -20,6 +23,8 @@ import net.sf.jasperreports.engine.JasperReport;
 public class srvReportePDF extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
+    usuarioDAO usdao = new usuarioDAO();
+    List<usuario> repUsuario = new ArrayList<>();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("application/pdf");

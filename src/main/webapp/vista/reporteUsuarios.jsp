@@ -17,7 +17,7 @@
     <body>
         
         <a class="ex" href="<%=request.getContextPath()%>/srvReporteUsuarios?accion=excel"><i class="fas fa-file-pdf"></i>Exportar Excel</a>
-        <a class="ex" href="<%=request.getContextPath()%>/srvReportePDF?accion=pdf" target="_blank"><i class="fas fa-file-pdf"></i>Exportar PDF</a>
+        <a class="ex" href="<%=request.getContextPath()%>/srvReporteUsuarios?accion=pdf" target="_blank"><i class="fas fa-file-pdf"></i>Exportar PDF</a>
 
         <table class="tablaRep">
             <thead>
