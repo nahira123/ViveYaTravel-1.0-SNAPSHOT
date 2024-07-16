@@ -350,7 +350,7 @@ public class usuarioDAO {
 
     public JasperPrint exportarPDF(ServletContext context) throws JRException {
         // Ruta del archivo JRXML
-        String jrxmlFilePath = context.getRealPath("/reporteJasper/ReporteUsuarios.jrxml");
+        String jrxmlFilePath = context.getRealPath("/reporteJasper/usuarios1.jrxml");
 
         if (jrxmlFilePath == null) {
             throw new JRException("No se pudo obtener la ruta real del archivo JRXML");

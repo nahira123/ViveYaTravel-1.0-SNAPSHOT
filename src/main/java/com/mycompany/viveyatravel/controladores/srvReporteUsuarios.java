@@ -4,17 +4,24 @@ import com.mycompany.viveyatravel.modelo.dao.usuarioDAO;
 import com.mycompany.viveyatravel.modelo.dto.usuario;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 
 public class srvReporteUsuarios extends HttpServlet {
 
@@ -44,25 +51,6 @@ public class srvReporteUsuarios extends HttpServlet {
                     out.close();
                     flujo.close();
                     break;
-
-                case "pdf":
-                        try {
-                    //Llenar el reporte con datos
-                    JasperPrint jasperPrint = new usuarioDAO().exportarPDF(getServletContext());
-
-                    // Configurar el encabezado para descarga del archivo
-                    response.setContentType("application/pdf");
-                    response.setCharacterEncoding("UTF-8");
-                    response.setHeader("Content-Disposition", "inline; filename=reporte.pdf");
-
-                    // Exportar el reporte a la salida del servlet
-                    JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
-
-                } catch (JRException e) {
-                    throw new ServletException("Error en la generación del reporte", e);
-                }
-
-                break;
             }
 
         } else {
@@ -71,29 +59,12 @@ public class srvReporteUsuarios extends HttpServlet {
         }
     }
 
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
