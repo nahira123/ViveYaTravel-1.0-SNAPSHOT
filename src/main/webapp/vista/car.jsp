@@ -352,7 +352,7 @@
         <div class="col d-flex justify-content-end">
             
             <button class="btn btn-success me-2" id="comprar-btn">Comprar</button>
-            <button class="btn btn-primary" id="imprimir-btn">Imprimir</button>
+            <button class="btn btn-primary" id="imprimir-btn">Generar Boleta</button>
             <a href="factura.jsp" <button class="btn btn-warning" id="factura-btn">Generar Factura</button></a>
         </div>
     </div>
